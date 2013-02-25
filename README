@@ -1,1 +1,11 @@
-This file was created by JetBrains PhpStorm 5.0.4 for binding GitHub repository
+Point of sale program for the web
+---------------------------------
+
+Written in PHP.  
+
+Requirements:  
+1) PHP  
+2) MySQL  
+  
+  
+Written by Antonis Kalou (kalouantonis@gmail.com)  
