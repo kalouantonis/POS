@@ -16,16 +16,18 @@ require "../types/type_models.php";
 $id = $_GET['id'];
 
 // Testing
-$id = 6;
+#$id = 6;
 
 $pro_table = new ProductTable();
 $pro_data = $pro_table->getDataFromID($id);
 
-$type_table = new TypeTable();
-$type_data = $type_table->getDataFromID($pro_data['type_id']);
-
 $subtype_table = new SubTypeTable();
 $subtype_data = $subtype_table->getDataFromID($pro_data['subtype_id']);
+
+$type_table = new TypeTable();
+$type_data = $type_table->getDataFromID($subtype_data['type_id']);
+
+
 
 echo '<h3>Product Type: </h3>' . $type_data['name'] . '<br>';
 echo '<h3>Product Sub-Type: </h3>' .  $subtype_data['name'] . '<br>';

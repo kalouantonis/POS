@@ -2,16 +2,17 @@
 /**
  * Created by JetBrains PhpStorm.
  * Developed By: Antonis Kalou
- * Date: 2/20/13
- * Time: 4:11 PM
+ * Date: 2/25/13
+ * Time: 7:35 PM
  * Licenced under the GPL v3
  */
+
 
 if(!isset($db_location)) {
 	$db_location = 'db_model.php';
 }
-require $db_location;
 
+require_once $db_location;
 
 class SupplierTable extends DBModel
 {

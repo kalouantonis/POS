@@ -12,6 +12,7 @@ define("DB_USERNAME", 'slacker'); // Test username
 define("DB_PASSWORD", 'slacker');
 define("DB_HOST", 'localhost');
 
+
 class DBModel
 {
     protected $_TableName;

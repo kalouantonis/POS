@@ -11,6 +11,7 @@ $id = $_GET['id'];
 
 $db_location = '../db_model.php';
 require "sup_model.php";
+
 $sup_table = new SupplierTable();
 
 $sup_table->delete($id);

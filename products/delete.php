@@ -9,3 +9,11 @@
 
 $id = $_GET['id'];
 
+$db_location = '../db_model.php';
+require "pro_model.php";
+
+$pro_table = new ProductTable();
+
+$pro_table->delete($id);
+
+header("Location: http://{$_SERVER['HTTP_HOST']}/POS/products.php");

@@ -2,8 +2,8 @@
 /**
  * Created by JetBrains PhpStorm.
  * Developed By: Antonis Kalou
- * Date: 2/23/13
- * Time: 1:41 PM
+ * Date: 2/25/13
+ * Time: 7:34 PM
  * Licenced under the GPL v3
  */
 
@@ -11,7 +11,7 @@ if(!isset($db_location)) {
 	$db_location = 'db_model.php';
 }
 
-require $db_location;
+require_once $db_location;
 
 class ProductTable extends DBModel
 {
@@ -33,14 +33,13 @@ class ProductTable extends DBModel
 		return $data;
 	}
 
-	public function insert($type, $subtype, $stock, $supplier_id, $user_id) {
-		$sql = 'INSERT INTO ' . $this->_TableName . ' (type_id, subtype_id, stock, supplier_id, user_id)' .
-			'VALUES (:type, :subtype, :stock, :supplier_id, :user_id)';
+	public function insert($subtype, $stock, $supplier_id, $user_id) {
+		$sql = 'INSERT INTO ' . $this->_TableName . ' (subtype_id, stock, supplier_id, user_id)' .
+			'VALUES (:subtype, :stock, :supplier_id, :user_id)';
 		// Using this way to prevent SQL injection
 
 		$statement = $this->_DBObject->prepare($sql);
 
-		$statement->bindParam(':type', $type);
 		$statement->bindParam(':subtype', $subtype);
 		$statement->bindParam(':stock', $stock);
 		$statement->bindParam(':supplier_id', $supplier_id);
@@ -49,7 +48,7 @@ class ProductTable extends DBModel
 		$statement->execute();
 	}
 
-	public function update($id, $type, $subtype, $stock, $supplier_id) {
+	public function update($id, $subtype, $stock, $supplier_id) {
 		$sql = 'UPDATE ' . $this->_TableName . ' SET type_id=:type, subtype_id=:subtype, stock:stock, supplier_id=:supplier_id
 			 WHERE ' . $this->_PrimaryKey . '=:id';
 
@@ -63,6 +62,20 @@ class ProductTable extends DBModel
 		$statement->bindParam(':id', $id);
 
 		// Execute statement
+		$statement->execute();
+	}
+
+	public function getDataFromID($id) {
+		return parent::getDataFromID($id);
+	}
+
+	public function delete($id) {
+		$sql = 'UPDATE ' . $this->_TableName . ' SET deleted=1 WHERE id=:id';
+
+		$statement = $this->_DBObject->prepare($sql);
+
+		$statement->bindParam(':id', $id);
+
 		$statement->execute();
 	}
 }

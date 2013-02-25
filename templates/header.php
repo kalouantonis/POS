@@ -49,4 +49,3 @@ if(!isset($style_location)) {
     }
     ?>
 
-<!-- Need to add login authentication-->

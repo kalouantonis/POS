@@ -12,9 +12,10 @@ include_once "templates/header.php";
 
 
 require "auth/session_auth.php";
+/*
 if(!sessionAccess()) {
 	die ("You must be logged in to view this page");
-}
+} */
 
 ?>
 
@@ -39,8 +40,8 @@ for($i=0; $i < count($product_data); $i++) {
 	$row_object = 'robj' . $i;
 
 	// May need supplier id
-	$type_data = $type_table->getDataFromID($product_data[$i]['type_id']);
 	$subtype_data = $subtype_table->getDataFromID($product_data[$i]['subtype_id']);
+	$type_data = $type_table->getDataFromID($subtype_data['type_id']);
 
 	// Extract values to create row
 	$extract = array( 0=> $type_data['name'], 1 => $subtype_data['name'], 2 => $product_data[$i]['stock']);

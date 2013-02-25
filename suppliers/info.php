@@ -10,12 +10,12 @@
 $style_location = '../static/css/style.css';
 include_once "../templates/header.php";
 
-$db_location = '../db_model.php';
-require "sup_model.php";
-
 $id = $_GET['id'];
 
 #$id = 8;
+
+$db_location = '../db_model.php';
+require "sup_model.php";
 
 $sup_table = new SupplierTable();
 $data = $sup_table->getDataFromID($id);

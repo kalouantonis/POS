@@ -2,51 +2,78 @@
 /**
  * Created by JetBrains PhpStorm.
  * Developed By: Antonis Kalou
- * Date: 2/22/13
- * Time: 12:04 PM
+ * Date: 2/21/13
+ * Time: 5:58 PM
  * Licenced under the GPL v3
  */
 
-$style_location = '../static/css/style.css';
-$page_title = 'Edit Record';
+$style_location = "../static/css/style.css";
 include_once "../templates/header.php";
 
+// Authenticate users
 
-require_once "../templates/form.php";
+// Debugging
+#$_SERVER['REQUEST_METHOD'] = 'POST';
+#$_SESSION['uid'] = 1;
+#$_POST['name'] = 'test';
+#$_POST['cost'] = '32132131';
+
 
 $id = $_GET['id'];
 
-$db_location = '../db_model.php';
-require "pro_model.php";
-$pro_table = new ProductTable();
-
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
-	$pro_table->update($id, $_POST['name'], $_POST['cost'], $_POST['stock'], $_POST['supplier']);
-	header("Location: http://{$_SERVER['HTTP_HOST']}/POS/suppliers.php");
+	$db_location = '../db_model.php';
+	require "pro_model.php";
+
+	$pro_db = new ProductTable();
+
+	$pro_db->insert($_POST['subtype'], $_POST['stock'], $_POST['supplier'], $_SESSION['uid']);
+
+	header("Location: http://{$_SERVER['HTTP_HOST']}/POS/products.php");
 }   else {
+	require_once "../templates/form.php";
 
-	$pro_data = $pro_table->getDataFromID($id);
-
-	// Create input form
-	$pro_name = new InputField('text', 'name', 'Product Name', $pro_data['name'], null, 100);
-	$pro_cost = new InputField('text', 'cost', 'Product Cost', $pro_data['cost'], null, 50);
-	$pro_stock = new InputField('text', 'stock', 'Stock Level', $pro_data['stock'], null, 100);
 
 	// Query the suppliers table to make drop down box
 	$db_location = '../db_model.php';
 	require "../suppliers/sup_model.php";
+	require "../types/type_models.php";
+	require "pro_model.php";
+
 	$sup_db = new SupplierTable();
 
-	$sup_data = $sup_db->getAllSupplierData();
-	for($i=0; $i < count($sup_data); $i++) {
-		$options[$sup_data[$i]['id']] = $sup_data[$i]['name'];
-	}
+	$type_db = new TypeTable();
+	$subtype_db = new SubTypeTable();
+	$pro_db = new ProductTable();
 
-	$pro_supplier = new Select('supplier', $options);
+	$sup_data = $sup_db->getAllSupplierData();
+	$type_data = $type_db->getAllTypeData();
+
+	// TODO: Need to add relationship between type selection and sub type selection
+	$subtype_data = $subtype_db->getAllSubTypeData();
+
+	for($i=0; $i < count($sup_data); $i++)
+		$sup_option[$sup_data[$i]['id']] = $sup_data[$i]['name'];
+
+
+	for($i=0; $i < count($type_data); $i++)
+		$type_option[$type_data[$i]['id']] = $type_data[$i]['name'];
+
+	for($i=0; $i < count($subtype_data); $i++)
+		$subtype_option[$subtype_data[$i]['id']] = $subtype_data[$i]['name'];
+
+	$pro_supplier = new Select('supplier', $sup_option);
+	$pro_type = new Select('type', $type_option);
+	$pro_subtype = new Select('subtype', $subtype_option);
+
+	// Create input form
+	$stock_value = $pro_db->getDataFromID($id);
+	$pro_stock = new InputField('text', 'stock', 'Stock Level', null, null, 100);
+
 	$pro_submit = new InputField('submit', 'submit', null, 'Insert', false);
 
 	// Create the form
-	$pro_form = new Form(array($pro_name, $pro_cost, $pro_stock , $pro_supplier, $pro_submit),
+	$pro_form = new Form(array($pro_type, $pro_subtype, $pro_stock , $pro_supplier, $pro_submit),
 		"http://{$_SERVER['HTTP_HOST']}/POS/products/insert.php");
 
 	echo $pro_form->render();
