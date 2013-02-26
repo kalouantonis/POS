@@ -14,7 +14,7 @@ else {
 }
 
 if(!isset($page_title)) {
-    $page_title = 'Jewelery Emporium';
+    $page_title = 'The POS'; // Change this according to site
 }
 if(!isset($style_location)) {
 	$style_location = "static/css/style.css";

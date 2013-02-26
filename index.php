@@ -5,7 +5,7 @@
  * Time: 11:16 PM
  */
 
-$page_title = "Welcome to Jewelery Emporium";
+$page_title = "Welcome to the POS!";
 include_once "templates/header.php";
 
 require "db_model.php";

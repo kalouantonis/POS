@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS suppliers;
 CREATE TABLE suppliers (
   id INT PRIMARY KEY AUTO_INCREMENT,
   name VARCHAR(400) NOT NULL,
@@ -11,6 +12,7 @@ CREATE TABLE suppliers (
 # Yes, i am aware that i am not using foreign keys. I will get to that once MySQL seems to
 # want to accept it
 
+DROP TABLE IF EXISTS products;
 CREATE TABLE products (
   id INT PRIMARY KEY AUTO_INCREMENT,
   subtype_id INT UNSIGNED,
@@ -21,6 +23,7 @@ CREATE TABLE products (
   deleted INT DEFAULT 0
 );
 
+DROP TABLE IF EXISTS subtypes;
 CREATE TABLE subtypes (
   id INT PRIMARY KEY AUTO_INCREMENT ,
   name VARCHAR (400),
@@ -28,12 +31,14 @@ CREATE TABLE subtypes (
   deleted INT DEFAULT 0
 );
 
+DROP TABLE IF EXISTS types;
 CREATE TABLE types (
   id INT PRIMARY KEY AUTO_INCREMENT,
   name VARCHAR (400),
   deleted INT DEFAULT 0
 );
 
+DROP TABLE IF EXISTS users;
 CREATE TABLE users (
   id INT PRIMARY KEY AUTO_INCREMENT ,
   username VARCHAR (25),
