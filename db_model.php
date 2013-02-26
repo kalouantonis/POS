@@ -1,10 +1,11 @@
 <?php
 /**
  * Created by JetBrains PhpStorm.
- * User: slacker
+ * User: Antonis Kalou
  * Date: 2/12/13
  * Time: 2:03 PM
- * To change this template use File | Settings | File Templates.
+ * @author: Antonis Kalou
+ * @copyright GPL v3
  */
 
 define("DB_NAME", 'pos_db'); // Need to change this manually until further notice
@@ -13,6 +14,17 @@ define("DB_PASSWORD", 'slacker');
 define("DB_HOST", 'localhost');
 
 
+/**
+ * Creates an abstraction layer between the Controller and MySQL.
+ *
+ * @version 1.1
+ *
+ * @property string $_TableName The table name in the Database
+ * @property array $_ColumnNames
+ * @property object $_DBObject Object instance of the PDO
+ * @property string $_PrimaryKey The name of the primary in the table. This is used later for automatic querying
+ *
+ */
 class DBModel
 {
     protected $_TableName;
@@ -22,7 +34,16 @@ class DBModel
 
 	// TODO: Add destructor
 
-    public function __construct($table_name, $column_names = null) {   // Object constructor
+	/**
+	 * Construct the Class and connects to the database.
+	 *
+	 * It requires 2 arguments to construct. The table name, which is the table stored in the MySQL database,
+	 * and custom column names, if they are required.
+	 *
+	 * @method void __construct(string $table_name, array $column_names)
+	 * @throws Exception if connection to the MySQL database has failed
+	 */
+	public function __construct($table_name, $column_names = null) {   // Object constructor
         $this->_TableName = $table_name; # Set the private attribute
 
 	    // Create new PDO object
@@ -40,6 +61,12 @@ class DBModel
 	    }
     }
 
+	/**
+	 * Runs a custom SQL command, when the built in functions do not suffice.
+	 *
+	 * @param string $query The custom SQL query
+	 * @return mixed[] Returns a relational array of the results
+	 */
 	public function custQuery($query) {
 		$statement = $this->_DBObject;
 		$result = $statement->prepare($query);
@@ -47,6 +74,14 @@ class DBModel
 		return $result->fetch();
 	}
 
+	/**
+	 * Gets all data from the table, using the primary key.
+	 *
+	 * Binds parameter of $id in to the :id located in the $sql_query string
+	 *
+	 * @param int $id The ID to get the data for
+	 * @return mixed[] Returns the query results in a relational array
+	 */
 	public function getDataFromID($id) {
 
 		$sql_query = 'SELECT * FROM ' . $this->_TableName . ' WHERE ' . $this->_PrimaryKey . '=:id';
@@ -65,6 +100,15 @@ class DBModel
 
 	}
 
+	/**
+	 * Gets all ID's in the table
+	 *
+	 * Queries table for all IDS. The caller can decide weather they want all IDS (included deleted)
+	 * or ID's excluding deleted
+	 *
+	 * @param bool $deleted If true, queries the table for deleted items too
+	 * @return mixed[]
+	 */
 	public function getAllIds($deleted=false) {
 		$sql_query = 'SELECT ' . $this->_PrimaryKey . ' FROM ' . $this->_TableName;
 
@@ -79,6 +123,19 @@ class DBModel
 		return $statement->fetchAll(PDO::FETCH_ASSOC);
 	}
 
+	/**
+	 *
+	 * Finds the ID of the item.
+	 *
+	 * @todo FIX this
+	 *
+	 * @depreciated 1.1
+	 * @depreciated Do not use this, as it does not work, and will not work until further notice
+	 *
+	 * @param string $query_field The field name in the table to query
+	 * @param string $query_term The term to search for in the provided query field
+	 * @return int|mixed[] Unsure of this, as it may return either a single int or an array
+	 */
 	public function findID($query_field, $query_term) {
 
 		if (!$this->_PrimaryKey) { die("There is not primary key!"); }
@@ -115,6 +172,17 @@ class DBModel
 			}
 		}
 	}
+
+	/**
+	 * Deletes item from the table
+	 *
+	 * This does not actually delete rows, as this could leave orphaned data.
+	 * It sets the deleted field to 1, which is equivalent to true.
+	 * If $restore = true, then the oposite is done, setting deleted to false.
+	 *
+	 * @param int $id The ID that will be deleted.
+	 * @param bool $restore If true, sets deleted to 0, making the row accessible
+	 */
 	public function delete($id, $restore=false) {
 		$sql = 'UPDATE ' . $this->_TableName;
 
@@ -134,15 +202,4 @@ class DBModel
 }
 
 // Testing
-/*
-$test = new DBModel('users');
 
-$sent_username = 'slacker';
-$sent_password = 'slacker';
-
-$user_data = $test->custQuery("SELECT * FROM users WHERE username='$sent_username'
-                                AND password=PASSWORD('$sent_password')");
-$allIds = $test->getAllIds();
-
-echo var_dump($allIds);
-*/
