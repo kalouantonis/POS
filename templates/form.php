@@ -59,10 +59,14 @@ class Select
 {
 	private $_SelectOptions;
 	private $_SelectName;
-	public function __construct($select_name, $options) {
+	private $_ItemSelected;
+
+	public function __construct($select_name, $options, $display=null, $selected=null) {
 		if(is_array($options)) {
 			$this->_SelectName = $select_name;
 			$this->_SelectOptions = $options;
+			$this->_Display = $display;
+			$this->_ItemSelected = $selected;
 		} else {
 			die ("Options must be a relational array");
 		}
@@ -73,10 +77,15 @@ class Select
 	}
 
 	public function render() {
-		$str = '<select name="' . $this->_SelectName . '">';
 
-		foreach($this->_SelectOptions as $value => $display) {
-			$str .= '<option value="' . $value . '">' . $display . '</option>';
+		$str = $this->_Display;
+		$str .= '<select name="' . $this->_SelectName . '" size="1">';
+
+		foreach($this->_SelectOptions as $value => $item) {
+			if($this->_ItemSelected == $value)
+				$str .= '<option value="' . $value . '" selected>' . $item . '</option>';
+			else
+				$str .= '<option value="' . $value . '">' . $item . '</option>';
 		}
 
 		$str .= '</select>';

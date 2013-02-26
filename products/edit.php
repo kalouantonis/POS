@@ -7,6 +7,8 @@
  * Licenced under the GPL v3
  */
 
+// FIXME: THE WHOLE SCRIPT!!!!!!!
+
 $style_location = "../static/css/style.css";
 include_once "../templates/header.php";
 
@@ -20,6 +22,9 @@ include_once "../templates/header.php";
 
 
 $id = $_GET['id'];
+
+// Testing
+#$id = 10;
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$db_location = '../db_model.php';
@@ -40,16 +45,16 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 	require "../types/type_models.php";
 	require "pro_model.php";
 
+	// Create table objects
 	$sup_db = new SupplierTable();
-
 	$type_db = new TypeTable();
 	$subtype_db = new SubTypeTable();
 	$pro_db = new ProductTable();
 
+	$pro_data = $pro_db->getDataFromID($id);
 	$sup_data = $sup_db->getAllSupplierData();
 	$type_data = $type_db->getAllTypeData();
 
-	// TODO: Need to add relationship between type selection and sub type selection
 	$subtype_data = $subtype_db->getAllSubTypeData();
 
 	for($i=0; $i < count($sup_data); $i++)
@@ -59,22 +64,27 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 	for($i=0; $i < count($type_data); $i++)
 		$type_option[$type_data[$i]['id']] = $type_data[$i]['name'];
 
+	// TODO: Make relation to type
 	for($i=0; $i < count($subtype_data); $i++)
 		$subtype_option[$subtype_data[$i]['id']] = $subtype_data[$i]['name'];
 
-	$pro_supplier = new Select('supplier', $sup_option);
-	$pro_type = new Select('type', $type_option);
-	$pro_subtype = new Select('subtype', $subtype_option);
+	$pro_subtype = new Select('subtype', $subtype_option, 'Select Subtype: ', $pro_data['subtype_id']);
 
+	$cur_type = $subtype_db->getDataFromID($pro_data['subtype_id'])['type_id'];
+	$pro_type = new Select('type', $type_option, 'Select Product Type: ', $cur_type);
+
+	$pro_supplier = new Select('supplier', $sup_option, 'Select Supplier: ', $pro_data['supplier_id']);
 	// Create input form
-	$stock_value = $pro_db->getDataFromID($id);
-	$pro_stock = new InputField('text', 'stock', 'Stock Level', null, null, 100);
+	$pro_stock = new InputField('text', 'stock', 'Stock Level', $pro_data['stock'], null, 100);
 
 	$pro_submit = new InputField('submit', 'submit', null, 'Insert', false);
 
 	// Create the form
-	$pro_form = new Form(array($pro_type, $pro_subtype, $pro_stock , $pro_supplier, $pro_submit),
+	$pro_form = new Form(array($pro_type, $pro_subtype, $pro_stock, $pro_supplier, $pro_submit),
 		"http://{$_SERVER['HTTP_HOST']}/POS/products/insert.php");
+
+	#$pro_form = new Form(array($pro_type, $pro_subtype, $pro_stock , $pro_supplier, $pro_submit),
+	#	"http://{$_SERVER['HTTP_HOST']}/POS/products/insert.php");
 
 	echo $pro_form->render();
 }

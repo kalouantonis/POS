@@ -22,6 +22,7 @@ include_once "../templates/header.php";
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$db_location = '../db_model.php';
+	require "pro_model.php";
 
 	$pro_db = new ProductTable();
 
@@ -57,9 +58,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 	for($i=0; $i < count($subtype_data); $i++)
 		$subtype_option[$subtype_data[$i]['id']] = $subtype_data[$i]['name'];
 
-	$pro_supplier = new Select('supplier', $sup_option);
-	$pro_type = new Select('type', $type_option);
-	$pro_subtype = new Select('subtype', $subtype_option);
+	$pro_supplier = new Select('supplier', $sup_option, 'Select Supplier: ');
+	$pro_type = new Select('type', $type_option, 'Select Product Type: ');
+	$pro_subtype = new Select('subtype', $subtype_option, 'Select Subtype: ');
+
 	// Create input form
 	$pro_stock = new InputField('text', 'stock', 'Stock Level', null, null, 100);
 
