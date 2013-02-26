@@ -14,6 +14,8 @@ require "sup_model.php";
 
 $sup_table = new SupplierTable();
 
-$sup_table->delete($id);
+$sup_data = $sup_table->getDataFromID($id);
+
+$sup_table->delete($id, $sup_data['deleted']);
 
 header("Location: http://{$_SERVER['HTTP_HOST']}/POS/suppliers.php");

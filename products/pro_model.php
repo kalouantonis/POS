@@ -64,18 +64,4 @@ class ProductTable extends DBModel
 		// Execute statement
 		$statement->execute();
 	}
-
-	public function getDataFromID($id) {
-		return parent::getDataFromID($id);
-	}
-
-	public function delete($id) {
-		$sql = 'UPDATE ' . $this->_TableName . ' SET deleted=1 WHERE id=:id';
-
-		$statement = $this->_DBObject->prepare($sql);
-
-		$statement->bindParam(':id', $id);
-
-		$statement->execute();
-	}
 }

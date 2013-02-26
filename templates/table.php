@@ -66,7 +66,7 @@
 
 		private $_Row;
 
-		public function __construct($data, $id, $location) {
+		public function __construct($data, $id, $location, $restore=false) {
 			$this->_Row = "\n<tr class=\"row\">";
 
 			ksort($data); // Sort relational array according to key
@@ -76,7 +76,11 @@
 			}
 			$this->_Row .= '<td><a href="' . $location . '/info.php?id=' . $id . '"> Info</a></td>';
 			$this->_Row .= '<td><a href="' . $location . '/edit.php?id=' . $id .'"> Edit</a></td>';
-			$this->_Row .= '<td><a href="' . $location . '/delete.php?id=' . $id .'">Delete</a></td>';
+
+			if($restore)
+				$this->_Row .= '<td><a href="' . $location . '/delete.php?id=' . $id .'">Restore</a></td>';
+			else
+				$this->_Row .= '<td><a href="' . $location . '/delete.php?id=' . $id . '">Delete</a></td>';
 
 			$this->_Row .= '</tr>';
 		}

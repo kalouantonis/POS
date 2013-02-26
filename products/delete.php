@@ -14,6 +14,8 @@ require "pro_model.php";
 
 $pro_table = new ProductTable();
 
-$pro_table->delete($id);
+$pro_data = $pro_table->getDataFromID($id);
+
+$pro_table->delete($id, $pro_data['deleted']);
 
 header("Location: http://{$_SERVER['HTTP_HOST']}/POS/products.php");

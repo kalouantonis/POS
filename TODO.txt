@@ -1,0 +1,4 @@
+1) Use sessions
+2) Insert date/time when update is made
+3) Create type display
+4) Create restore for deleted items

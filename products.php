@@ -12,10 +12,10 @@ include_once "templates/header.php";
 
 
 require "auth/session_auth.php";
-/*
+
 if(!sessionAccess()) {
 	die ("You must be logged in to view this page");
-} */
+}
 
 ?>
 
@@ -47,12 +47,21 @@ for($i=0; $i < count($product_data); $i++) {
 	$extract = array( 0=> $type_data['name'], 1 => $subtype_data['name'], 2 => $product_data[$i]['stock']);
 
 	// Dynamically create row objects
-	$$row_object = new Row($extract, $product_data[$i]['id'], '/POS/products');
+	$$row_object = new Row($extract, $product_data[$i]['id'], '/POS/products', $product_data[$i]['deleted']);
 	$obj_arr[] = $$row_object;
 }
 
 $table = new Table(array('Type', 'Sub-Type', 'Stock Level'), $obj_arr);
 echo $table->render();
+
+echo '<br>';
+
+$show_deleted = isset($_GET['show']) ? true : false;
+
+if($show_deleted)
+	echo '<a href="/POS/products.php">Hide deleted items</a>';
+else
+	echo '<a href="/POS/products.php?show=true">Show deleted items</a>';
 
 include_once "templates/footer.php";
 

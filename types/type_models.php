@@ -56,16 +56,6 @@ class TypeTable extends DBModel
 		// Execute statement
 		$statement->execute();
 	}
-
-	public function delete($id) {
-		$sql = 'UPDATE ' . $this->_TableName . ' SET deleted=1 WHERE id=:id';
-
-		$statement = $this->_DBObject->prepare($sql);
-
-		$statement->bindParam(':id', $id);
-
-		$statement->execute();
-	}
 }
 
 class SubTypeTable extends DBModel

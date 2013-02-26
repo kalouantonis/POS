@@ -66,17 +66,10 @@ class SupplierTable extends DBModel
 		$statement->bindParam(':tel', $tel);
 		$statement->bindParam(':id', $id);
 		$statement->bindParam(':email', $email);
-		$statement->bindParam(':purchase_area', $email);
+		$statement->bindParam(':purchase_area', $purchase_area);
 
 		$statement->execute();
 	}
 
-	public function delete($id) {
-		$sql = 'UPDATE ' . $this->_TableName . ' SET deleted=1 WHERE id=:id';
-		$statement = $this->_DBObject->prepare($sql);
 
-		$statement->bindParam(':id', $id);
-
-		$statement->execute();
-	}
 }

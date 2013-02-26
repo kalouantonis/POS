@@ -115,6 +115,22 @@ class DBModel
 			}
 		}
 	}
+	public function delete($id, $restore=false) {
+		$sql = 'UPDATE ' . $this->_TableName;
+
+		if($restore)
+			$sql .= ' SET deleted=0 ';
+		else
+			$sql .= ' SET deleted=1 ';
+
+		$sql .= 'WHERE id=:id';
+
+		$statement = $this->_DBObject->prepare($sql);
+
+		$statement->bindParam(':id', $id);
+
+		$statement->execute();
+	}
 }
 
 // Testing

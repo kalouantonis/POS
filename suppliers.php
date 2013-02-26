@@ -46,7 +46,7 @@ for($i=0; $i < count($supplier_data); $i++) {
 	// Only extract name and telephone number
 	$extract = array(0 => $supplier_data[$i]['name'], 1=> $supplier_data[$i]['tel'],
 		2 => $supplier_data[$i]['email'], 3 => $supplier_data[$i]['purchase_area']);
-	$$row_object = new Row($extract, $supplier_data[$i]['id'], '/POS/suppliers');
+	$$row_object = new Row($extract, $supplier_data[$i]['id'], '/POS/suppliers', $supplier_data[$i]['deleted']);
 	$obj_arr[] = $$row_object;
 }
 
