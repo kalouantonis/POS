@@ -56,6 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <li><a href="/POS/suppliers.php">Suppliers</a></li>
                 <li><a href="/POS/products.php">Products</a></li>
                 <li><a href="/POS/types.php">Types</a></li>
+                <li><a href="/POS/subtypes.php">Subtypes</a></li>
             </ul>';
 }
 

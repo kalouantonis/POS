@@ -8,6 +8,7 @@
  */
 
 function sessionAccess() {
+	// TODO: Rewrite this to automatically exit when no session
 	if(isset($_SESSION['username']) and isset($_SESSION['uid'])) {
 		return true;
 	}

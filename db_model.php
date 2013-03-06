@@ -138,7 +138,7 @@ class DBModel
 	 */
 	public function findID($query_field, $query_term) {
 
-		if (!$this->_PrimaryKey) { die("There is not primary key!"); }
+		if (!$this->_PrimaryKey) { die("There is no primary key!"); }
 
 		$sql_query = 'SELECT ' . $this->_PrimaryKey .
 			' FROM ' .$this->_TableName .
