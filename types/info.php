@@ -12,7 +12,8 @@ $style_location = "../static/css/style.css";
 include_once "../templates/header.php";
 
 $db_location = "../db_model.php";
-require "type_models.php";
+require "type_model.php";
+require "../subtypes/subtype_model.php";
 
 $id = $_GET['id'];
 

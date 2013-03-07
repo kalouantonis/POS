@@ -12,8 +12,8 @@ include_once "templates/header.php";
 
 require "auth/session_auth.php";
 
-if(!sessionAccess())
-	die("You must be logged in to view this page!");
+if(!checkSessionAccess())
+	die ("You must be logged in to view this page!");
 
 #echo "Under development";
 
@@ -23,7 +23,7 @@ if(!sessionAccess())
 
 <?php
 
-require "types/type_models.php";
+require "types/type_model.php";
 require "templates/table.php";
 
 $show_deleted = isset($_GET['show']) ? true : false;

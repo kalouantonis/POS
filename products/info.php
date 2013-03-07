@@ -12,7 +12,7 @@ include_once "../templates/header.php";
 
 $db_location = '../db_model.php';
 require "pro_model.php";
-require "../types/type_models.php";
+require "../types/type_model.php";
 $id = $_GET['id'];
 
 // Testing

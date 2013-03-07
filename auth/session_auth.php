@@ -7,10 +7,9 @@
  * Licenced under the GPL v3
  */
 
-function sessionAccess() {
-	// TODO: Rewrite this to automatically exit when no session
-	if(isset($_SESSION['username']) and isset($_SESSION['uid'])) {
+function checkSessionAccess() {
+	if(isset($_SESSION['username']) and isset($_SESSION['uid']))
 		return true;
-	}
+
 	return false;
 }

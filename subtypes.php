@@ -11,15 +11,16 @@ $page_title = 'Subtypes';
 include_once "templates/header.php";
 
 require 'auth/session_auth.php';
-if(!sessionAccess())
-	die ('You must be logged in to view this page!');
+if(!checkSessionAccess())
+	die ("You must be logged in to view this page!");
+
 ?>
 
 <a href="/POS/types/sub_insert.php">Insert New Subtype</a><br><br>
 
 <?php
 
-require_once 'types/type_models.php';
+require_once 'subtypes/subtype_model.php';
 require_once 'templates/table.php';
 
 $show_deleted = isset($_GET['show']) ? true : false;
@@ -31,7 +32,7 @@ for($i=0; $i < count($subtype_data); $i++) {
 	$row_object = 'robj' . $i;
 
 	$extract = array(0 => $subtype_data[$i]['name']);
-	$$row_object = new Row($extract, $subtype_data[$i]['id'], '/POS/types', $subtype_data[$i]['deleted']);
+	$$row_object = new Row($extract, $subtype_data[$i]['id'], '/POS/subtypes', $subtype_data[$i]['deleted']);
 	$row_arr[] = $$row_object;
 }
 

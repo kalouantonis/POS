@@ -21,7 +21,7 @@ require "sup_model.php";
 $sup_table = new SupplierTable();
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
-	$sup_table->update($id, $_POST['sup_name'], $_POST['sup_tel'], $_POST['sup_email'], $_POST['purchase_area']);
+	$sup_table->update($_GET['id'], $_POST['sup_name'], $_POST['sup_tel'], $_POST['sup_email'], $_POST['purchase_area']);
 	header("Location: http://{$_SERVER['HTTP_HOST']}/POS/suppliers.php");
 }   else {
 

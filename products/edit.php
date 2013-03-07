@@ -32,7 +32,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 	$pro_db = new ProductTable();
 
-	$pro_db->insert($_POST['subtype'], $_POST['stock'], $_POST['supplier'], $_SESSION['uid']);
+	$pro_db->update($_GET['id'] ,$_POST['subtype'], $_POST['stock'], $_POST['supplier']);
 
 	header("Location: http://{$_SERVER['HTTP_HOST']}/POS/products.php");
 }   else {
@@ -42,7 +42,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 	// Query the suppliers table to make drop down box
 	$db_location = '../db_model.php';
 	require "../suppliers/sup_model.php";
-	require "../types/type_models.php";
+	require "../types/type_model.php";
 	require "pro_model.php";
 
 	// Create table objects
@@ -81,7 +81,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 	// Create the form
 	$pro_form = new Form(array($pro_type, $pro_subtype, $pro_stock, $pro_supplier, $pro_submit),
-		"http://{$_SERVER['HTTP_HOST']}/POS/products/insert.php");
+		"http://{$_SERVER['HTTP_HOST']}/POS/products/insert.php?id={$id}");
 
 	#$pro_form = new Form(array($pro_type, $pro_subtype, $pro_stock , $pro_supplier, $pro_submit),
 	#	"http://{$_SERVER['HTTP_HOST']}/POS/products/insert.php");

@@ -13,9 +13,8 @@ include_once "templates/header.php";
 
 require "auth/session_auth.php";
 
-if(!sessionAccess()) {
-	die ("You must be logged in to view this page");
-}
+if(!checkSessionAccess())
+	die ("You must be logged in to view this page!");
 
 ?>
 
@@ -24,7 +23,8 @@ if(!sessionAccess()) {
 <?php
 
 require "products/pro_model.php";
-require "types/type_models.php";
+require "types/type_model.php";
+require "subtypes/subtype_model.php";
 
 $pro_table = new ProductTable();
 $type_table = new TypeTable();

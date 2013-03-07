@@ -17,10 +17,8 @@ require "auth/session_auth.php";
 #$_SESSION['username'] = "slacker";
 #$_SESSION['uid'] = 1;
 
-if(!sessionAccess()) {  // TODO: Fix function to do this
-	die ("You must be logged in to see this page"); // TODO: Add flash message to index
-	#header("Location: http://{$_SERVER['HTTP_HOST']}/POS/index.php");
-}
+if(!checkSessionAccess())
+	die ("You must be logged in to view this page!");
 
 ?>
 

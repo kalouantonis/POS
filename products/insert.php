@@ -36,7 +36,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 	// Query the suppliers table to make drop down box
 	$db_location = '../db_model.php';
 	require "../suppliers/sup_model.php";
-	require "../types/type_models.php";
+	require "../types/type_model.php";
+	require "../subtypes/subtype_model.php";
 
 	$sup_db = new SupplierTable();
 	$type_db = new TypeTable();

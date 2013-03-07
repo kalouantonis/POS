@@ -12,7 +12,13 @@ $page_title = 'Insert New Type';
 include_once "../templates/header.php";
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
-	echo "Post... man";
+	$db_location = '../db_model.php';
+	require_once "type_model.php";
+
+	$type_table = new TypeTable();
+	$type_table->insert($_POST['type_name'], $_SESSION['uid']);
+
+	header("Location: http://{$_SERVER['HTTP_HOST']}/POS/types.php");
 
 }   else {
 	require_once "../templates/form.php";
