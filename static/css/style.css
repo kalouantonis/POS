@@ -18,4 +18,6 @@ tr              {margin: 2em}
 
 .col_heading    {font-weight: bold; text-align: left}
 .insert         {}
-.row          {font-size: 0.9em; border-bottom: 1px solid #ccc; margin: 0; padding: 0}
+.row            {font-size: 0.9em; border-bottom: 1px solid #ccc; margin: 0; padding: 0}
+
+.sidenav        {text-align: left; border: 5px solid #cccccc; width: 13em; padding: 0.8em; background: white;}

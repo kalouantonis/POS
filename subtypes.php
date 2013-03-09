@@ -16,7 +16,7 @@ if(!checkSessionAccess())
 
 ?>
 
-<a href="/POS/types/sub_insert.php">Insert New Subtype</a><br><br>
+<a href="/POS/subtypes/insert.php">Insert New Subtype</a><br><br>
 
 <?php
 

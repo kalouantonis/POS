@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+error_reporting(E_ALL);
+
 if($_SERVER['HTTP_HOST'] == 'localhost') {
     // Set the server path
     $SERVER_PATH = $_SERVER['HTTP_HOST'].'/POS';
