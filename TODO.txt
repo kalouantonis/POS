@@ -1,3 +1,0 @@
-1) Add logging
-2) Output buffering
-3) Use CodeIgniter
